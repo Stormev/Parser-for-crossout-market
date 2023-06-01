@@ -1,0 +1,73 @@
+import requests
+from bs4 import BeautifulSoup
+
+#  This is my first parser for game Crossout
+
+
+ResourceCost = {'MetalCost': 0, 'CopperCost': 0, 'PlasticCost': 0,
+                'WiresCost': 0, 'ElectronicCost': 0, "Uranium": 0}
+
+
+def update_costs():
+    print("Please wait request...")
+    # metal
+    site = requests.get("https://crossoutdb.com/item/53").text
+    soup = BeautifulSoup(site, "lxml")
+    block = soup.find("div", id="sidebarWrapper")
+    table = block.find('table')
+    body = table.find("tbody")
+    tr = body.find_all("tr")[0]
+    value = "".join(str(tr).split("<td>")[2][0:4])
+    ResourceCost['MetalCost'] = float(value)
+    # copper
+    site = requests.get("https://crossoutdb.com/item/43").text
+    soup = BeautifulSoup(site, "lxml")
+    block = soup.find("div", id="sidebarWrapper")
+    table = block.find('table')
+    body = table.find("tbody")
+    tr = body.find_all("tr")[0]
+    value = "".join(str(tr).split("<td>")[2][0:4])
+    ResourceCost['CopperCost'] = float(value)
+    # Plastic
+    site = requests.get("https://crossoutdb.com/item/785").text
+    soup = BeautifulSoup(site, "lxml")
+    block = soup.find("div", id="sidebarWrapper")
+    table = block.find('table')
+    body = table.find("tbody")
+    tr = body.find_all("tr")[0]
+    value = "".join(str(tr).split("<td>")[2][0:4])
+    ResourceCost['PlasticCost'] = float(value)
+    # Wires
+    site = requests.get("https://crossoutdb.com/item/85").text
+    soup = BeautifulSoup(site, "lxml")
+    block = soup.find("div", id="sidebarWrapper")
+    table = block.find('table')
+    body = table.find("tbody")
+    tr = body.find_all("tr")[0]
+    value = "".join(str(tr).split("<td>")[2][0:4])
+    ResourceCost['WiresCost'] = float(value)
+    # Electronic
+    site = requests.get("https://crossoutdb.com/item/168").text
+    soup = BeautifulSoup(site, "lxml")
+    block = soup.find("div", id="sidebarWrapper")
+    table = block.find('table')
+    body = table.find("tbody")
+    tr = body.find_all("tr")[0]
+    value = "".join(str(tr).split("<td>")[2][0:4])
+    ResourceCost['ElectronicCost'] = float(value)
+    # Uranium
+    site = requests.get("https://crossoutdb.com/item/335").text
+    soup = BeautifulSoup(site, "lxml")
+    block = soup.find("div", id="sidebarWrapper")
+    table = block.find('table')
+    body = table.find("tbody")
+    tr = body.find_all("tr")[0]
+    value = "".join(str(tr).split("<td>")[2][0:4])
+    ResourceCost['ElectronicCost'] = float(value)
+
+    print("Resource costs was updated")
+
+
+if __name__ == "__main__":
+    update_costs()
+    print(ResourceCost)
